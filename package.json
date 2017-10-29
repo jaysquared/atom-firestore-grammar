@@ -8,11 +8,10 @@
   "dependencies": {},
   "license": "MIT",
   "repository": {
-   "type": "git",
-   "url": "https://github.com/jaysquared/atom-firestore-grammar.git"
- },
- "bugs": {
-   "url": "https://github.com/jaysquared/atom-firestore-grammar/issues"
- },
-
+    "type": "git",
+    "url": "https://github.com/jaysquared/atom-firestore-grammar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jaysquared/atom-firestore-grammar/issues"
+  }
 }
