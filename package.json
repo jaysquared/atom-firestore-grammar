@@ -1,6 +1,6 @@
 {
   "name": "firestore-rules-grammar",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Firestore Rules Grammar for syntax highlighting in Atom",
   "engines": {
     "atom": "*"
