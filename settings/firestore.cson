@@ -1,0 +1,4 @@
+'.source.firestore':
+  editor:
+    # Allow toggling comments with cmd+/
+    commentStart: '// '
