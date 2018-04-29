@@ -1,80 +1,125 @@
-'scopeName': 'source.firestore'
-'name': 'Firestore'
-'fileTypes': ['rule','rules']
+# Firestore Rules Syntax: version 1.1
+scopeName: "source.firestore"
+name: "Firestore Rules"
+fileTypes: [
+	"rule"
+	"rules"
+]
+firstLineMatch: "^service\\s+cloud\\.firestore\\s+{"
+foldingStartMarker: "^{\\s*$"
+foldingStopMarker:  "^\\s*}"
+patterns: [include: "#main"]
+repository:
+	main:
+		patterns: [
+			{include: "#number"}
+			{include: "#comment"}
+			{include: "#basicTypes"}
+			{include: "#strings"}
+			{include: "#functionName"}
+			{include: "#functionParameterList"}
+			{include: "#pathMatchLiteral"}
+			{include: "#pathMatchVariable"}
+			{include: "#globalFunc"}
+			{include: "#accessControl"}
+			{include: "#keywords"}
+			{include: "#booleans"}
+			{include: "#otherConstants"}
+			{include: "#comparisons"}
+			{include: "#typeMember"}
+		]
 
-"patterns": [
-      {
-         "match": "\\b(\\d+)\\b",
-         "name": "constant.numeric"
-      }, {
-         "match": "\\/\\/.*",
-         "name": "comment"
-      }, {
-         "comment": "Basic types",
-         "match": "\\b(request|math|user|duration|string|int|cloud)\\b",
-         "name": "support.type"
-      }, {
-         "comment": "Strings",
-         "match": "[\\\"\\'].*?[\\\"\\']",
-         "name": "string.quoted"
-      }, {
-         "comment": "Function name",
-         "match": "[\\.\\s\\(]([a-zA-Z]+)(?=\\()",
-         "captures": {
-            "1": { "name": "support.function" }
-         }
-      }, {
-         "comment": "Function parameters",
-         "begin": "\\(",
-         "end": "\\)",
-         "patterns": [
-            {
-               "match": "\\b(?<![\\'\\\"])[a-zA-Z0-9_]+(?![\\'\\\"])\\b",
-               "name": "variable.parameter"
-            },
-            {
-               "match": "[\\\"\\'].*?[\\\"\\']",
-               "name": "string.quoted"
-            }
-         ]
-      }, {
-         "comment": "Path match literal",
-         "match": "\\/([a-zA-Z0-9_]+)(?=[\\s\\/])",
-         "captures": {
-            "1": { "name": "string.unquoted" }
-         }
-      }, {
-         "comment": "Path match variable",
-         "match": "\\/({[^}]+})(?=[\\s\\/])",
-         "captures": {
-            "1": { "name": "variable.parameter" }
-         }
-      }, {
-         "comment": "Global functions without parentheses",
-         "match": "^\\s*(service|match|allow)(?=\\s)",
-         "captures": {
-            "1": { "name": "support.function" }
-         }
-      }, {
-         "match": "\\b(if|return|is)\\b",
-         "name": "keyword.control"
-      }, {
-         "comment": "Access control",
-         "match": "\\s(get|list|read|create|update|delete|write)[,:;]",
-         "captures": {
-            "1": { "name": "storage.modifier" }
-         }
-      }, {
-         "match": "(=|!|>|<|\\||&)",
-         "name": "keyword.operator"
-      }, {
-         "match": "\\b(true|false|null|in|function)\\b",
-         "name": "constant.language"
-      }, {
-         "comment": "Type member",
-         "match": "\\.([a-zA-Z0-9_]+)",
-         "captures": {
-            "1": { "name": "variable.parameter" }
-         }
-      }
-   ]
+	basicTypes:
+		name: "storage.type.$1.firestore"
+		match: "\\b(request|math|user|duration|string|int|cloud)\\b"
+
+	comment:
+		name:  "comment.line.double-slash.firestore"
+		begin: "//"
+		end:   "$"
+		beginCaptures:
+			0: name: "punctuation.definition.comment.firestore"
+
+	number:
+		name: "constant.numeric.decimal.integer.firestore"
+		match: "\\b(\\d+)\\b"
+	
+	strings:
+		patterns: [{
+			name: "string.quoted.double.firestore"
+			begin: '"'
+			end:   '"'
+			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
+			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
+		},{
+			name: "string.quoted.single.firestore"
+			begin: "'"
+			end:   "'"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
+			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
+		}]
+	
+	functionName:
+		name: "entity.name.function.firestore"
+		match: "([.\\s\\(])[a-zA-Z]+(?=\\()"
+		captures:
+			1: name: "punctuation.definition.function.firestore"
+	
+	functionParameterList:
+		name:  "meta.function.parameters.firestore"
+		begin: "\\("
+		end:   "\\)"
+		beginCaptures: 0: name: "punctuation.definition.parameters.begin.bracket.round.firestore"
+		endCaptures:   0: name: "punctuation.definition.parameters.end.bracket.round.firestore"
+		patterns: [
+			{include: "#functionParameter"}
+			{include: "#strings"}
+		]
+
+	functionParameter:
+		name: "variable.parameter.function.firestore"
+		match: "\\b(?<!['\"])[a-zA-Z0-9_]+(?!['\"])\\b"
+
+	pathMatchLiteral:
+		match: "/([a-zA-Z0-9_]+)(?=[\\s/])"
+		captures:
+			1: name: "string.unquoted.path-match.firestore"
+
+	pathMatchVariable:
+		match: "\\/({[^}]+})(?=[\\s\\/])"
+		captures:
+			1: name: "variable.parameter.path-match.firestore"
+
+
+	# Global functions without parentheses
+	globalFunc:
+		name: "support.function.global.$1.firestore"
+		match: "^\\s*(service|match|allow)(?=\\s)"
+
+	keywords:
+		name: "keyword.control.$1.firestore"
+		match: "\\b(if|return|is)\\b"
+
+	accessControl:
+		match: "\\s(get|list|read|create|update|delete|write)([,:;])"
+		captures:
+			1: name: "storage.modifier.access-control.firestore"
+			2: name: "punctuation.separator.access-control.firestore"
+
+	comparisons:
+		name: "keyword.operator.comparison.firestore"
+		match: "[=!><|&]"
+
+	booleans:
+		name: "constant.language.boolean.$1.firestore"
+		match: "\\b(true|false)\\b"
+
+	otherConstants:
+		name:  "constant.language.$1.firestore"
+		match: "\\b(null|in|function)\\b"
+
+	typeMember:
+		name: "variable.parameter.type.member.firestore"
+		match: "(\\.)[a-zA-Z0-9_]+"
+		captures:
+			1: name: "punctuation.definition.variable.full-stop.dot.period.firestore"
