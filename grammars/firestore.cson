@@ -59,9 +59,9 @@ repository:
 
 	functionName:
 		name: "entity.name.function.firestore"
-		match: "([.\\s\\(])[a-zA-Z]+(?=\\()"
+		match: "[.\\s\\(][a-zA-Z]+(?=\\()"
 		captures:
-			1: name: "punctuation.definition.function.firestore"
+			0: patterns: [include: "#punctuation"]
 	
 	functionParameterList:
 		name:  "meta.function.parameters.firestore"
@@ -135,6 +135,7 @@ repository:
 			{match: "\\]", name: "punctuation.definition.bracket.square.end.firestore"}
 			{match: "\\(", name: "punctuation.definition.bracket.round.begin.firestore"}
 			{match: "\\)", name: "punctuation.definition.bracket.round.end.firestore"}
+			{match: "\\.", name: "punctuation.definition.full-stop.dot.period.firestore"}
 		]
 	
 	strings:
@@ -154,6 +155,6 @@ repository:
 
 	typeMember:
 		name: "variable.parameter.type.member.firestore"
-		match: "(\\.)[a-zA-Z0-9_]+"
+		match: "\\.[a-zA-Z0-9_]+"
 		captures:
-			1: name: "punctuation.definition.full-stop.dot.period.firestore"
+			0: patterns: [include: "#punctuation"]
