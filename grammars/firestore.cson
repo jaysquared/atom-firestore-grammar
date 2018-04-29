@@ -51,7 +51,7 @@ repository:
 
 	comparisons:
 		name: "keyword.operator.comparison.firestore"
-		match: "[=!><|&]"
+		match: "!!|&&|\\|\\||[!=]==?|>=|<=|<<[<=]?|>>[>=]?|[=!><|&]"
 
 	functionName:
 		name: "entity.name.function.firestore"
