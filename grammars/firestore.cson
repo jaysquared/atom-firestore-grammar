@@ -24,8 +24,8 @@ repository:
 			{include: "#accessControl"}
 			{include: "#keywords"}
 			{include: "#booleans"}
-			{include: "#otherKeywords"}
 			{include: "#comparisons"}
+			{include: "#arithmetic"}
 			{include: "#typeMember"}
 			{include: "#punctuation"}
 		]
@@ -33,6 +33,10 @@ repository:
 	accessControl:
 		name: "storage.modifier.access-control.firestore"
 		match: "\\b(get|list|read|create|update|delete|write)\\b(?=[\\s,:;]|$)"
+
+	arithmetic:
+		name:  "keyword.operator.arithmetic.firestore"
+		match: "[-+*/%]"
 
 	basicTypes:
 		name: "storage.type.$1.firestore"
@@ -143,4 +147,4 @@ repository:
 		name: "variable.parameter.type.member.firestore"
 		match: "(\\.)[a-zA-Z0-9_]+"
 		captures:
-			1: name: "punctuation.definition.variable.full-stop.dot.period.firestore"
+			1: name: "punctuation.definition.full-stop.dot.period.firestore"
