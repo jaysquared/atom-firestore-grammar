@@ -31,10 +31,8 @@ repository:
 		]
 
 	accessControl:
-		match: "\\s(get|list|read|create|update|delete|write)([,:;])"
-		captures:
-			1: name: "storage.modifier.access-control.firestore"
-			2: name: "punctuation.separator.access-control.firestore"
+		name: "storage.modifier.access-control.firestore"
+		match: "\\b(get|list|read|create|update|delete|write)\\b(?=[\\s,:;]|$)"
 
 	basicTypes:
 		name: "storage.type.$1.firestore"
@@ -115,6 +113,7 @@ repository:
 
 	punctuation:
 		patterns: [
+			{match: ":",   name: "keyword.operator.assignment.colon.key-value.firestore"}
 			{match: ";",   name: "punctuation.terminator.statement.semicolon.firestore"}
 			{match: ",",   name: "punctuation.separator.delimiter.comma.firestore"}
 			{match: "{",   name: "punctuation.definition.bracket.curly.begin.firestore"}
