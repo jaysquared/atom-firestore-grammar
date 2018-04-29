@@ -12,14 +12,14 @@ patterns: [include: "#main"]
 repository:
 	main:
 		patterns: [
-			{include: "#number"}
 			{include: "#comment"}
+			{include: "#pathMatchLiteral"}
+			{include: "#pathMatchVariable"}
 			{include: "#basicTypes"}
+			{include: "#number"}
 			{include: "#strings"}
 			{include: "#functionName"}
 			{include: "#functionParameterList"}
-			{include: "#pathMatchLiteral"}
-			{include: "#pathMatchVariable"}
 			{include: "#globalFunc"}
 			{include: "#accessControl"}
 			{include: "#keywords"}
@@ -69,8 +69,7 @@ repository:
 		endCaptures:   0: name: "punctuation.definition.parameters.end.bracket.round.firestore"
 		patterns: [
 			{include: "#functionParameter"}
-			{include: "#strings"}
-			{include: "#punctuation"}
+			{include: "#main"}
 		]
 
 	functionParameter:
@@ -83,34 +82,36 @@ repository:
 		match: "^\\s*(service|match|allow)(?=\\s)"
 
 	keywords:
-		name: "keyword.control.$1.firestore"
-		match: "\\b(if|return|is)\\b"
-
-	number:
-		name: "constant.numeric.decimal.integer.firestore"
-		match: "\\b(\\d+)\\b"
-	
-	otherKeywords:
 		patterns: [{
+			name: "keyword.control.$1.firestore"
+			match: "\\b(if|in|return|is)\\b"
+		},{
 			name: "constant.language.null.firestore"
 			match: "\\b(null)\\b"
-		},{
-			name: "keyword.operator.in.firestore"
-			match: "\\b(in)\\b"
 		},{
 			name: "storage.type.function.firestore"
 			match: "\\b(function)\\b"
 		}]
+		
+
+	number:
+		name: "constant.numeric.decimal.integer.firestore"
+		match: "\\b(\\d+)\\b"
 
 	pathMatchLiteral:
-		match: "/([a-zA-Z0-9_]+)(?=[\\s/])"
+		name: "string.unquoted.path.firestore"
+		match: "(/)[-a-zA-Z0-9_]+(?=[\\s/])"
 		captures:
-			1: name: "string.unquoted.path-match.firestore"
-
+			1: name: "punctuation.definition.string.slash.firestore"
+		
 	pathMatchVariable:
-		match: "\\/({[^}]+})(?=[\\s\\/])"
+		name:  "string.unquoted.path.interpolation.firestore"
+		match: "(/)({)([^}]+)(})(?=[\\s/])"
 		captures:
-			1: name: "variable.parameter.path-match.firestore"
+			1: name: "punctuation.definition.string.slash.firestore"
+			2: name: "punctuation.definition.section.begin.firestore"
+			3: name: "variable.parameter.path.match.firestore"
+			4: name: "punctuation.definition.section.end.firestore"
 
 	punctuation:
 		patterns: [
