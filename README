@@ -1,3 +1,6 @@
-Firestore Rules Grammar for Atom.
+Firestore Rules Grammar for Atom
+================================
 
 Rules based on https://github.com/toba/vsfire
+
+Language reference at [firebase.google.com](https://firebase.google.com/docs/firestore/reference/security/).
