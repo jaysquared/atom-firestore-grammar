@@ -27,6 +27,7 @@ repository:
 			{include: "#otherConstants"}
 			{include: "#comparisons"}
 			{include: "#typeMember"}
+			{include: "#punctuation"}
 		]
 
 	basicTypes:
@@ -74,6 +75,7 @@ repository:
 		patterns: [
 			{include: "#functionParameter"}
 			{include: "#strings"}
+			{include: "#punctuation"}
 		]
 
 	functionParameter:
@@ -90,6 +92,17 @@ repository:
 		captures:
 			1: name: "variable.parameter.path-match.firestore"
 
+	punctuation:
+		patterns: [
+			{match: ";",   name: "punctuation.terminator.statement.semicolon.firestore"}
+			{match: ",",   name: "punctuation.separator.delimiter.comma.firestore"}
+			{match: "{",   name: "punctuation.definition.bracket.curly.begin.firestore"}
+			{match: "}",   name: "punctuation.definition.bracket.curly.end.firestore"}
+			{match: "\\[", name: "punctuation.definition.bracket.square.begin.firestore"}
+			{match: "\\]", name: "punctuation.definition.bracket.square.end.firestore"}
+			{match: "\\(", name: "punctuation.definition.bracket.round.begin.firestore"}
+			{match: "\\)", name: "punctuation.definition.bracket.round.end.firestore"}
+		]
 
 	# Global functions without parentheses
 	globalFunc:
