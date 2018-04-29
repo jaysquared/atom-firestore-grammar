@@ -24,15 +24,25 @@ repository:
 			{include: "#accessControl"}
 			{include: "#keywords"}
 			{include: "#booleans"}
-			{include: "#otherConstants"}
+			{include: "#otherKeywords"}
 			{include: "#comparisons"}
 			{include: "#typeMember"}
 			{include: "#punctuation"}
 		]
 
+	accessControl:
+		match: "\\s(get|list|read|create|update|delete|write)([,:;])"
+		captures:
+			1: name: "storage.modifier.access-control.firestore"
+			2: name: "punctuation.separator.access-control.firestore"
+
 	basicTypes:
 		name: "storage.type.$1.firestore"
 		match: "\\b(request|math|user|duration|string|int|cloud)\\b"
+
+	booleans:
+		name: "constant.language.boolean.$1.firestore"
+		match: "\\b(true|false)\\b"
 
 	comment:
 		name:  "comment.line.double-slash.firestore"
@@ -41,25 +51,10 @@ repository:
 		beginCaptures:
 			0: name: "punctuation.definition.comment.firestore"
 
-	number:
-		name: "constant.numeric.decimal.integer.firestore"
-		match: "\\b(\\d+)\\b"
-	
-	strings:
-		patterns: [{
-			name: "string.quoted.double.firestore"
-			begin: '"'
-			end:   '"'
-			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
-			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
-		},{
-			name: "string.quoted.single.firestore"
-			begin: "'"
-			end:   "'"
-			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
-			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
-		}]
-	
+	comparisons:
+		name: "keyword.operator.comparison.firestore"
+		match: "[=!><|&]"
+
 	functionName:
 		name: "entity.name.function.firestore"
 		match: "([.\\s\\(])[a-zA-Z]+(?=\\()"
@@ -82,6 +77,31 @@ repository:
 		name: "variable.parameter.function.firestore"
 		match: "\\b(?<!['\"])[a-zA-Z0-9_]+(?!['\"])\\b"
 
+	# Global functions without parentheses
+	globalFunc:
+		name: "support.function.global.$1.firestore"
+		match: "^\\s*(service|match|allow)(?=\\s)"
+
+	keywords:
+		name: "keyword.control.$1.firestore"
+		match: "\\b(if|return|is)\\b"
+
+	number:
+		name: "constant.numeric.decimal.integer.firestore"
+		match: "\\b(\\d+)\\b"
+	
+	otherKeywords:
+		patterns: [{
+			name: "constant.language.null.firestore"
+			match: "\\b(null)\\b"
+		},{
+			name: "keyword.operator.in.firestore"
+			match: "\\b(in)\\b"
+		},{
+			name: "storage.type.function.firestore"
+			match: "\\b(function)\\b"
+		}]
+
 	pathMatchLiteral:
 		match: "/([a-zA-Z0-9_]+)(?=[\\s/])"
 		captures:
@@ -103,33 +123,21 @@ repository:
 			{match: "\\(", name: "punctuation.definition.bracket.round.begin.firestore"}
 			{match: "\\)", name: "punctuation.definition.bracket.round.end.firestore"}
 		]
-
-	# Global functions without parentheses
-	globalFunc:
-		name: "support.function.global.$1.firestore"
-		match: "^\\s*(service|match|allow)(?=\\s)"
-
-	keywords:
-		name: "keyword.control.$1.firestore"
-		match: "\\b(if|return|is)\\b"
-
-	accessControl:
-		match: "\\s(get|list|read|create|update|delete|write)([,:;])"
-		captures:
-			1: name: "storage.modifier.access-control.firestore"
-			2: name: "punctuation.separator.access-control.firestore"
-
-	comparisons:
-		name: "keyword.operator.comparison.firestore"
-		match: "[=!><|&]"
-
-	booleans:
-		name: "constant.language.boolean.$1.firestore"
-		match: "\\b(true|false)\\b"
-
-	otherConstants:
-		name:  "constant.language.$1.firestore"
-		match: "\\b(null|in|function)\\b"
+	
+	strings:
+		patterns: [{
+			name: "string.quoted.double.firestore"
+			begin: '"'
+			end:   '"'
+			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
+			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
+		},{
+			name: "string.quoted.single.firestore"
+			begin: "'"
+			end:   "'"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.firestore"
+			endCaptures:   0: name: "punctuation.definition.string.end.firestore"
+		}]
 
 	typeMember:
 		name: "variable.parameter.type.member.firestore"
