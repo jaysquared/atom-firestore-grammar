@@ -95,10 +95,19 @@ repository:
 			match: "\\b(function)\\b"
 		}]
 		
-
 	number:
-		name: "constant.numeric.decimal.integer.firestore"
-		match: "\\b(\\d+)\\b"
+		patterns: [{
+			# Floating point
+			name: "constant.numeric.decimal.float.firestore"
+			match: """(?x)
+				-?[0-9]+\\.[0-9]* | # 1.2, -3.4, -3.
+				-?      \\.[0-9]+   # .12, -.34, -.3
+			"""
+		},{
+			# Integer
+			name: "constant.numeric.decimal.integer.firestore"
+			match: "-?[0-9]+"
+		}]
 
 	pathMatchLiteral:
 		name: "string.unquoted.path.firestore"
