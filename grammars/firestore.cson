@@ -118,12 +118,21 @@ repository:
 		
 	pathMatchVariable:
 		name:  "string.unquoted.path.interpolation.firestore"
-		match: "(/)({)([^}]+)(})(?=[\\s/])"
+		match: """(?x)
+			(/)         #1
+			({)         #2
+			([^}]+?)    #3
+			((=)\\*+)?  #4-5
+			(})         #6
+			(?=[\\s/])
+		"""
 		captures:
 			1: name: "punctuation.definition.string.slash.firestore"
 			2: name: "punctuation.definition.section.begin.firestore"
 			3: name: "variable.parameter.path.match.firestore"
-			4: name: "punctuation.definition.section.end.firestore"
+			4: name: "keyword.operator.wildcard.firestore"
+			5: name: "punctuation.separator.key-value.firestore"
+			6: name: "punctuation.definition.section.end.firestore"
 
 	punctuation:
 		patterns: [
